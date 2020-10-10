@@ -16,7 +16,7 @@ const connection = require('./app/config/db.config');
 
 
 var corsOptions = {
-  origin: "http://localhost:8080"
+  origin: "https://testrg15tn.azurewebsites.net"
 };
 
 
