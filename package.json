@@ -7,20 +7,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@azure-tools/azcopy-node": "^1.0.0",
+    
     "adm-zip": "^0.4.16",
     "asyncawait": "^3.0.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "graceful-fs": "^4.2.4",
-    "keytar": "^6.0.1",
     "passport": "^0.4.1",
     "passport-azure-ad": "^4.3.0",
     "pg": "^8.4.1",
     "zip-a-folder": "0.0.12"
   },
   "devDependencies": {
-    "electron": "^10.1.3"
   }
 }
