@@ -1,10 +1,11 @@
 var express = require("express");
 var router = express.Router();
 var pg = require("pg");
+const passport = require('passport');
 
 const connection = require('../config/db.config')
 
-router.get('/getObjectType/getPolicies/:object_id', function (req, res, next) {
+router.get('/getObjectType/getPolicies/:object_id',passport.authenticate("oauth-bearer", { session: false }), function (req, res, next) {
   var objectId = req.params.object_id
   //console.log("for der 1 list :",objectId);       
   connection.query('SELECT * from fun_get_policy_details_tab($1);', [objectId], function (error, table) {
@@ -18,7 +19,7 @@ router.get('/getObjectType/getPolicies/:object_id', function (req, res, next) {
 });
 
 
-router.get('/getNames', function (req, res, next) {
+router.get('/getNames',passport.authenticate("oauth-bearer", { session: false }), function (req, res, next) {
   const table_name = req.query.tableValue
   const policy_name = req.query.policyResult
   console.log("query string for names...", table_name);
@@ -34,7 +35,7 @@ router.get('/getNames', function (req, res, next) {
   });
 });
 
-router.get('/getRevision', function (req, res, next) {
+router.get('/getRevision',passport.authenticate("oauth-bearer", { session: false }), function (req, res, next) {
   //console.log("In revision ... request object"+req.params.nameValue);
   //console.log("In revision ... request object"+req.params.tableName);
   const table_name = req.query.tableName;
@@ -54,7 +55,7 @@ router.get('/getRevision', function (req, res, next) {
 
 
 //const db = pgp(connectionString);
-router.get('/getObjectType', function (req, res, next) {
+router.get('/getObjectType',passport.authenticate("oauth-bearer", { session: false }), function (req, res, next) {
   /* const user_id = req.params.user_id */
   console.log("req headers",req.headers['authorization']);
   console.log("req auth Info",req.authInfo);
@@ -69,7 +70,7 @@ router.get('/getObjectType', function (req, res, next) {
 });
 
 
-router.get('/getObjectType/getDer1/:object_id',function (req, res, next) {
+router.get('/getObjectType/getDer1/:object_id',passport.authenticate("oauth-bearer", { session: false }),function (req, res, next) {
   var objectId = req.params.object_id
   // console.log("for der 1 list :",objectId);       
   // connection.query('SELECT * from fun_get_der1_list_tab($1);',[objectId],function(error,table){
@@ -83,7 +84,7 @@ router.get('/getObjectType/getDer1/:object_id',function (req, res, next) {
   });
 });
 
-router.get('/getObjectType/getDer2/:der1_id', function (req, res, next) {
+router.get('/getObjectType/getDer2/:der1_id',passport.authenticate("oauth-bearer", { session: false }), function (req, res, next) {
   var Der1Id = req.params.der1_id
   //console.log("For der 2 ",Der1Id);       
   // connection.query('SELECT * from fun_get_der2_list_tab($1);',[Der1Id],function(error,table){
@@ -98,7 +99,7 @@ router.get('/getObjectType/getDer2/:der1_id', function (req, res, next) {
 });
 
 
-router.get('/getObjectType/getDer3/:der2_id', function (req, res, next) {
+router.get('/getObjectType/getDer3/:der2_id',passport.authenticate("oauth-bearer", { session: false }), function (req, res, next) {
   var Der2Id = req.params.der2_id
   // console.log("For der 3 ",Der2Id);       
   // connection.query('SELECT * from fun_get_der3_list_tab($1);',[Der2Id],function(error,table){
@@ -112,7 +113,7 @@ router.get('/getObjectType/getDer3/:der2_id', function (req, res, next) {
   });
 });
 
-router.get('/getObjectType/getDer4/:der3_id',function (req, res, next) {
+router.get('/getObjectType/getDer4/:der3_id',passport.authenticate("oauth-bearer", { session: false }),function (req, res, next) {
   var Der3Id = req.params.der3_id
   //console.log("For der 4 ",Der3Id);       
   // connection.query('SELECT * from fun_get_der4_list_tab($1);',[Der3Id],function(error,table){
@@ -127,7 +128,7 @@ router.get('/getObjectType/getDer4/:der3_id',function (req, res, next) {
 });
 
 
-router.get('/getHeaderNames/:objectId', function (req, res, next) {
+router.get('/getHeaderNames/:objectId',passport.authenticate("oauth-bearer", { session: false }), function (req, res, next) {
   var objectId = req.params.objectId
   //console.log("In header names data...");        
   // connection.query('select * from load_nut_part where name=$1',[nameValue],function(error,table){
@@ -141,7 +142,7 @@ router.get('/getHeaderNames/:objectId', function (req, res, next) {
   });
 });
 
-router.get('/getPopupHeaderNames/:tableId', function (req, res, next) {
+router.get('/getPopupHeaderNames/:tableId',passport.authenticate("oauth-bearer", { session: false }), function (req, res, next) {
   var tableId = req.params.tableId
   console.log("In popup header names table Id...",tableId);        
   // connection.query('select * from load_nut_part where name=$1',[nameValue],function(error,table){
@@ -155,7 +156,7 @@ router.get('/getPopupHeaderNames/:tableId', function (req, res, next) {
     });
 });
 
-router.get('/getSearchData', function (req, res, next) {
+router.get('/getSearchData',passport.authenticate("oauth-bearer", { session: false }), function (req, res, next) {
   //console.log("In revision value ... request object>>"+req.query.revisionValue);
   //  console.log("In revision ... request object"+req.query.tableValue);
   var objectId = req.query.objectId;
@@ -260,7 +261,7 @@ router.get('/getSearchData', function (req, res, next) {
 
 });
 
-router.get('/getObjectId', function (req, res, next) {
+router.get('/getObjectId',passport.authenticate("oauth-bearer", { session: false }), function (req, res, next) {
   /* const user_id = req.params.user_id */
   var objectId = req.query.objectId
   var tableId = req.query.tableId
