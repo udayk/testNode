@@ -15,9 +15,13 @@ var BearerStrategy = require("passport-azure-ad").BearerStrategy;
 // var mysql= require('mysql');
 // var  pg = require("pg");
 //const connection = require("../app/config/db.config");
-var tenantID = '3dd8961f-e488-4e60-8e11-a82d994e183d';
-var clientID = '50863743-41d5-447c-8360-557baa765aa6';
-var appIdURI = 'api://50863743-41d5-447c-8360-557baa765aa6';
+//var tenantID = '3dd8961f-e488-4e60-8e11-a82d994e183d';
+//var clientID = '50863743-41d5-447c-8360-557baa765aa6';
+//var appIdURI = 'api://50863743-41d5-447c-8360-557baa765aa6';
+
+var tenantID = '8ae3bb6d-0b01-4fc7-8b21-2a95072cbc14';
+var clientID = '7c35d2b9-6be0-4fb1-aa7b-43fdb9215ae4';
+var appIdURI = 'api://7c35d2b9-6be0-4fb1-aa7b-43fdb9215ae4';
 
 var options = {
     identityMetadata: "https://login.microsoftonline.com/" + tenantID + "/v2.0/.well-known/openid-configuration",
@@ -35,7 +39,7 @@ var bearerStrategy = new BearerStrategy(options, function (token, done) {
 
 
 var corsOptions = {
-  origin: "http://localhost:8080"
+  origin: "https://testrg15tn.azurewebsites.net/"
 };
 
 
