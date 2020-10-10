@@ -15,7 +15,7 @@ const app = express();
 
 
 var corsOptions = {
-  origin: "http://localhost:8080"
+  origin: "https://testrg12rr.azurewebsites.net"
 };
 
 
