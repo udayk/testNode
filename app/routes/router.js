@@ -4,6 +4,68 @@ var pg = require("pg");
 const passport = require('passport');
 
 const connection = require('../config/db.config')
+const { AzCopyClient } = require("@azure-tools/azcopy-node");
+const { zip } = require('zip-a-folder');
+var fs = require('graceful-fs');
+var async = require('asyncawait/async');
+var await = require('asyncawait/await');
+const { execSync, spawn } = require('child_process');
+const AdmZip = require('adm-zip');
+
+
+var azclient = new AzCopyClient();
+
+var rimraf = require("rimraf");
+
+//var downloaddir = './downloads'
+
+var dir = __dirname + "/upload";
+if (fs.existsSync(dir)) {
+  rimraf(dir, function () { console.log("removing directory ....done"); });
+}
+
+async function getBlobData(source,dir){
+  console.log("in getblb data function");
+  const child =  execSync('azcopy copy "' + source + '" "' + dir + '" --recursive',[source,dir] )
+ }
+
+
+router.get('/getSourcePath', function (req, res, next) {
+  var source = req.query.path;  
+  var folderName = req.query.folderName;
+  console.log("source",source);
+  console.log("folder name",folderName);
+ 
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, function () { console.log("creating directory ....done"); });
+  }
+  getBlobData(source,dir);
+  var uploadDir = fs.readdirSync(__dirname + "/upload" +'/'+ folderName);
+
+  const zip = new AdmZip();
+  console.log("upload lenth",+uploadDir);
+  for (var i = 0; i < uploadDir.length; i++) {
+    zip.addLocalFile(__dirname + "/upload" +'/'+ folderName +'/'+ uploadDir[i]);
+  }
+  const downloadName = folderName+ '.zip';
+  const data = zip.toBuffer();
+  // save file zip in root directory
+  //zip.writeZip(__dirname+"/"+downloadName);
+
+  // code to download zip file
+
+  if (fs.existsSync(dir)) {
+    rimraf(dir, function () { console.log("removing directory ....done"); });
+  }
+ 
+  res.set('Content-Type','application/octet-stream');
+  res.set('Content-Disposition',`attachment; filename=${downloadName}`);
+  res.set('Content-Length',data.length);
+  res.send(data);
+
+});
+
+
 
 router.get('/getObjectType/getPolicies/:object_id',passport.authenticate("oauth-bearer", { session: false }), function (req, res, next) {
   var objectId = req.params.object_id
