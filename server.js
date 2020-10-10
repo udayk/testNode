@@ -15,7 +15,7 @@ const app = express();
 
 
 var corsOptions = {
-  origin: "https://testrg12rr.azurewebsites.net"
+  origin: "https://testrg14n.azurewebsites.net"
 };
 
 
